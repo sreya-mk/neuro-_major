@@ -47,22 +47,22 @@
             <!-- Question 1 -->
             <div class="question-card active" id="q1">
                 <h2>1. How do you prefer to receive instructions?</h2>
-                <div class="options-grid">
-                    <button class="option-btn" onclick="nextQuestion(1)">A) Reading detailed text</button>
-                    <button class="option-btn" onclick="nextQuestion(1)">B) Looking at pictures or diagrams</button>
-                    <button class="option-btn" onclick="nextQuestion(1)">C) Watching a video</button>
-                    <button class="option-btn" onclick="nextQuestion(1)">D) Trying it out myself (hands-on)</button>
-                </div>
+                    <div class="options-grid">
+                        <button class="option-btn" onclick="recordAnswer(1,'A'); nextQuestion(1)">A) Reading detailed text</button>
+                        <button class="option-btn" onclick="recordAnswer(1,'B'); nextQuestion(1)">B) Looking at pictures or diagrams</button>
+                        <button class="option-btn" onclick="recordAnswer(1,'C'); nextQuestion(1)">C) Watching a video</button>
+                        <button class="option-btn" onclick="recordAnswer(1,'D'); nextQuestion(1)">D) Trying it out myself (hands-on)</button>
+                    </div>
             </div>
 
             <!-- Question 2 -->
             <div class="question-card" id="q2">
                 <h2>2. In a noisy environment, how do you feel?</h2>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="nextQuestion(2)">A) I can easily tune it out.</button>
-                    <button class="option-btn" onclick="nextQuestion(2)">B) It distracts me slightly.</button>
-                    <button class="option-btn" onclick="nextQuestion(2)">C) It makes me feel overwhelmed.</button>
-                    <button class="option-btn" onclick="nextQuestion(2)">D) I prefer background noise while working.</button>
+                    <button class="option-btn" onclick="recordAnswer(2,'A'); nextQuestion(2)">A) I can easily tune it out.</button>
+                    <button class="option-btn" onclick="recordAnswer(2,'B'); nextQuestion(2)">B) It distracts me slightly.</button>
+                    <button class="option-btn" onclick="recordAnswer(2,'C'); nextQuestion(2)">C) It makes me feel overwhelmed.</button>
+                    <button class="option-btn" onclick="recordAnswer(2,'D'); nextQuestion(2)">D) I prefer background noise while working.</button>
                 </div>
             </div>
 
@@ -70,10 +70,10 @@
             <div class="question-card" id="q3">
                 <h2>3. How do you approach a large, complex task?</h2>
                 <div class="options-grid">
-                    <button class="option-btn" onclick="nextQuestion(3)">A) Break it down into small, step-by-step pieces.</button>
-                    <button class="option-btn" onclick="nextQuestion(3)">B) Jump in and figure it out as I go.</button>
-                    <button class="option-btn" onclick="nextQuestion(3)">C) Look at the big picture first, then plan.</button>
-                    <button class="option-btn" onclick="nextQuestion(3)">D) Ask someone for help or guidance to start.</button>
+                    <button class="option-btn" onclick="recordAnswer(3,'A'); nextQuestion(3)">A) Break it down into small, step-by-step pieces.</button>
+                    <button class="option-btn" onclick="recordAnswer(3,'B'); nextQuestion(3)">B) Jump in and figure it out as I go.</button>
+                    <button class="option-btn" onclick="recordAnswer(3,'C'); nextQuestion(3)">C) Look at the big picture first, then plan.</button>
+                    <button class="option-btn" onclick="recordAnswer(3,'D'); nextQuestion(3)">D) Ask someone for help or guidance to start.</button>
                 </div>
             </div>
 

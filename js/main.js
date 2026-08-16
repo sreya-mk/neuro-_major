@@ -239,6 +239,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Collect profiling answers
+    const profilingAnswers = {};
+
+    window.recordAnswer = function (questionNumber, choice) {
+        profilingAnswers[`q${questionNumber}`] = choice;
+        // persist locally in case of navigation
+        localStorage.setItem('neuroProfileAnswers', JSON.stringify(profilingAnswers));
+    };
+
     async function submitProfileData(payload) {
         try {
             await fetch('/api/submit', {
@@ -251,12 +260,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Watch for profile completion and submit a small event
+    // Watch for profile completion and submit answers payload
     const completionNode = document.getElementById('completion');
     if (completionNode) {
         const mo = new MutationObserver(() => {
             if (completionNode.classList.contains('active')) {
-                submitProfileData({ event: 'profile_complete', timestamp: Date.now() });
+                // load any saved answers
+                const saved = JSON.parse(localStorage.getItem('neuroProfileAnswers') || '{}');
+                const payload = { event: 'profile_complete', timestamp: Date.now(), answers: Object.keys(saved).length ? saved : profilingAnswers };
+                submitProfileData(payload);
                 mo.disconnect();
             }
         });
