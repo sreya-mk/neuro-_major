@@ -161,4 +161,110 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     loadSettings();
+
+    // --- Frontend ↔ Backend wiring ---
+    async function fetchProfile() {
+        try {
+            const res = await fetch('/api/profile');
+            if (!res.ok) return;
+            const data = await res.json();
+            const container = document.querySelector('.profiling-container');
+            if (container) {
+                const el = document.createElement('div');
+                el.className = 'profile-summary';
+                el.innerHTML = `
+                    <div style="text-align:left; margin-bottom:18px; padding:16px; border-radius:12px; border:1px solid var(--border-color); background:var(--card-bg);">
+                        <h3 style="margin:0 0 6px 0;">${data.name}</h3>
+                        <div style="color:var(--text-muted); margin-bottom:8px;">${data.title}</div>
+                        <p style="margin:0 0 8px 0;">${data.bio}</p>
+                        <div style="font-size:0.9rem; color:var(--text-main);"><strong>Skills:</strong> ${data.skills ? data.skills.join(', ') : ''}</div>
+                    </div>
+                `;
+                const first = container.querySelector('.progress-bar-container');
+                if (first) container.insertBefore(el, first.nextSibling);
+                else container.insertBefore(el, container.firstChild);
+            }
+        } catch (err) {
+            console.error('fetchProfile error', err);
+        }
+    }
+
+    async function fetchLearning() {
+        try {
+            const res = await fetch('/api/learning');
+            if (!res.ok) return;
+            const data = await res.json();
+            const list = document.querySelector('.module-list');
+            if (list && data.resources && data.resources.length) {
+                // Append any additional resources returned by the API
+                data.resources.forEach(r => {
+                    const item = document.createElement('div');
+                    item.className = 'module-item';
+                    item.innerHTML = `
+                        <div class="module-info">
+                            <div class="module-icon"><i class="fas fa-book"></i></div>
+                            <div class="module-details">
+                                <h3>${r.title}</h3>
+                                <p>${r.description || ''}</p>
+                            </div>
+                        </div>
+                        <a class="action-btn btn-start" href="${r.url || '#'}">Open</a>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+        } catch (err) {
+            console.error('fetchLearning error', err);
+        }
+    }
+
+    async function fetchInterviewQuestions() {
+        try {
+            const res = await fetch('/api/interview');
+            if (!res.ok) return;
+            const data = await res.json();
+            const chat = document.getElementById('chatMessages');
+            if (chat && data.questions && data.questions.length) {
+                data.questions.forEach(q => {
+                    const el = document.createElement('div');
+                    el.className = 'msg ai';
+                    el.textContent = q.question || q.text || 'Question';
+                    chat.appendChild(el);
+                });
+                // scroll to bottom
+                chat.scrollTop = chat.scrollHeight;
+            }
+        } catch (err) {
+            console.error('fetchInterviewQuestions error', err);
+        }
+    }
+
+    async function submitProfileData(payload) {
+        try {
+            await fetch('/api/submit', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+        } catch (err) {
+            console.error('submitProfileData error', err);
+        }
+    }
+
+    // Watch for profile completion and submit a small event
+    const completionNode = document.getElementById('completion');
+    if (completionNode) {
+        const mo = new MutationObserver(() => {
+            if (completionNode.classList.contains('active')) {
+                submitProfileData({ event: 'profile_complete', timestamp: Date.now() });
+                mo.disconnect();
+            }
+        });
+        mo.observe(completionNode, { attributes: true });
+    }
+
+    // Run appropriate fetches depending on page
+    fetchProfile();
+    fetchLearning();
+    fetchInterviewQuestions();
 });
