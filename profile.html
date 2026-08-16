@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroAdaptAI - Cognitive Profiling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .profiling-container { max-width: 700px; margin: 0 auto; text-align: center; }
+        .question-card { display: none; padding: 40px; background: var(--card-bg); border-radius: var(--border-radius); box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
+        .question-card.active { display: block; animation: fadeIn 0.5s ease; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; }
+        .option-btn { padding: 15px 20px; font-size: 1.1rem; text-align: left; background: var(--bg-color); border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; transition: var(--transition); color: var(--text-main); }
+        .option-btn:hover { border-color: var(--primary-color); background: rgba(74, 144, 226, 0.05); }
+        .progress-bar-container { width: 100%; height: 10px; background: var(--border-color); border-radius: 5px; margin-bottom: 30px; overflow: hidden; }
+        .progress-bar { height: 100%; background: var(--secondary-color); width: 0%; transition: width 0.3s ease; }
+    </style>
+</head>
+<body class="animate-fade-in">
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> NeuroAdapt<span>AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="profile.html" class="active">Profiling</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="interview.html">Interviews</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content container">
+        <div class="profiling-container">
+            <h1>Cognitive Profiling Assessment</h1>
+            <p style="margin-bottom: 30px; color: var(--text-muted);">
+                Answer a few quick questions to help us tailor your learning experience. There are no right or wrong answers. Take your time.
+            </p>
+
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-card active" id="q1">
+                <h2>1. How do you prefer to receive instructions?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="nextQuestion(1)">A) Reading detailed text</button>
+                    <button class="option-btn" onclick="nextQuestion(1)">B) Looking at pictures or diagrams</button>
+                    <button class="option-btn" onclick="nextQuestion(1)">C) Watching a video</button>
+                    <button class="option-btn" onclick="nextQuestion(1)">D) Trying it out myself (hands-on)</button>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-card" id="q2">
+                <h2>2. In a noisy environment, how do you feel?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="nextQuestion(2)">A) I can easily tune it out.</button>
+                    <button class="option-btn" onclick="nextQuestion(2)">B) It distracts me slightly.</button>
+                    <button class="option-btn" onclick="nextQuestion(2)">C) It makes me feel overwhelmed.</button>
+                    <button class="option-btn" onclick="nextQuestion(2)">D) I prefer background noise while working.</button>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-card" id="q3">
+                <h2>3. How do you approach a large, complex task?</h2>
+                <div class="options-grid">
+                    <button class="option-btn" onclick="nextQuestion(3)">A) Break it down into small, step-by-step pieces.</button>
+                    <button class="option-btn" onclick="nextQuestion(3)">B) Jump in and figure it out as I go.</button>
+                    <button class="option-btn" onclick="nextQuestion(3)">C) Look at the big picture first, then plan.</button>
+                    <button class="option-btn" onclick="nextQuestion(3)">D) Ask someone for help or guidance to start.</button>
+                </div>
+            </div>
+
+            <!-- Completion -->
+            <div class="question-card" id="completion">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--success); margin-bottom: 20px;"></i>
+                <h2>Profile Complete!</h2>
+                <p style="margin-bottom: 20px;">We've analyzed your interaction style and preferences. Your Neuro-Adaptive Engine is now active and your learning content has been personalized.</p>
+                <a href="learning.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 15px 30px;">
+                    Start Personalized Learning <i class="fas fa-arrow-right" style="margin-left: 10px;"></i>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        const totalQuestions = 3;
+        function nextQuestion(current) {
+            document.getElementById(`q${current}`).classList.remove('active');
+            
+            // Calculate progress
+            const progress = (current / totalQuestions) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+
+            if (current < totalQuestions) {
+                document.getElementById(`q${current + 1}`).classList.add('active');
+            } else {
+                document.getElementById('completion').classList.add('active');
+                document.getElementById('progressBar').style.width = `100%`;
+            }
+        }
+    </script>
+</body>
+</html>

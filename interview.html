@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroAdaptAI - Interview Prep</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .interview-container { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        .video-box { background: #000; border-radius: var(--border-radius); aspect-ratio: 16/9; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: white; }
+        .ai-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--primary-color); display: flex; align-items: center; justify-content: center; font-size: 3rem; animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(74, 144, 226, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(74, 144, 226, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(74, 144, 226, 0); }
+        }
+        .controls { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; background: rgba(0,0,0,0.6); padding: 10px 20px; border-radius: 30px; }
+        .control-btn { width: 45px; height: 45px; border-radius: 50%; border: none; background: white; color: #333; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .control-btn:hover { background: var(--primary-color); color: white; }
+        .control-btn.end { background: var(--danger); color: white; }
+        
+        .chat-box { background: var(--card-bg); border-radius: var(--border-radius); border: 1px solid var(--border-color); display: flex; flex-direction: column; height: 100%; max-height: 500px; }
+        .chat-header { padding: 15px 20px; border-bottom: 1px solid var(--border-color); font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+        .chat-messages { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .msg { padding: 12px 16px; border-radius: 12px; max-width: 85%; font-size: 0.95rem; }
+        .msg.ai { background: rgba(74, 144, 226, 0.1); align-self: flex-start; border-bottom-left-radius: 4px; }
+        .msg.user { background: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
+        
+        .feedback-panel { background: rgba(80, 227, 194, 0.1); border-left: 4px solid var(--secondary-color); padding: 15px; border-radius: 0 var(--border-radius) var(--border-radius) 0; margin-top: 24px; }
+        .feedback-panel h4 { display: flex; align-items: center; gap: 10px; color: var(--secondary-color); margin-bottom: 5px; }
+
+        @media (max-width: 768px) {
+            .interview-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body class="animate-fade-in">
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> NeuroAdapt<span>AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html">Dashboard</a></li>
+                <li><a href="profile.html">Profiling</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="interview.html" class="active">Interviews</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content container">
+        <div class="dashboard-header">
+            <div>
+                <h1>AI Mock Interview Simulation</h1>
+                <p>A low-stress, adaptive environment to practice your communication skills. Take your time, and pause whenever you need.</p>
+            </div>
+        </div>
+
+        <div class="interview-container">
+            <!-- Video Area -->
+            <div>
+                <div class="video-box">
+                    <div class="ai-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="controls">
+                        <button class="control-btn" title="Toggle Microphone"><i class="fas fa-microphone"></i></button>
+                        <button class="control-btn" title="Toggle Camera"><i class="fas fa-video"></i></button>
+                        <button class="control-btn" title="Pause Session" style="color: var(--warning);"><i class="fas fa-pause"></i></button>
+                        <button class="control-btn end" title="End Interview"><i class="fas fa-phone-slash"></i></button>
+                    </div>
+                </div>
+
+                <div class="feedback-panel">
+                    <h4><i class="fas fa-lightbulb"></i> Live Comfort Support</h4>
+                    <p style="font-size: 0.9rem; margin: 0; color: var(--text-main);">Take a deep breath. You are doing great. Remember to speak slowly and clearly. If you need a moment to think, it's perfectly fine to say "That's a good question, let me think about that."</p>
+                </div>
+            </div>
+
+            <!-- Transcript / Chat Area -->
+            <div class="chat-box">
+                <div class="chat-header">
+                    <span>Live Transcript</span>
+                    <i class="fas fa-closed-captioning" style="color: var(--primary-color);"></i>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg ai">Hello! Welcome to your practice interview. I am your AI assistant. How are you feeling today?</div>
+                    <div class="msg user">I'm feeling a bit nervous, but ready to start.</div>
+                    <div class="msg ai">It's completely normal to feel nervous! This is a safe space to practice. Take your time. Let's start with a simple question: Can you tell me about a project you recently worked on?</div>
+                </div>
+                <div style="padding: 15px; border-top: 1px solid var(--border-color); display: flex; gap: 10px;">
+                    <input type="text" placeholder="Type or speak your answer..." style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); outline: none; background: var(--bg-color); color: var(--text-main);">
+                    <button class="btn btn-primary" style="padding: 10px 15px;"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

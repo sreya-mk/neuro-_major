@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroAdaptAI - Dashboard</title>
+    <meta name="description" content="Progress Tracking and Predictive Employability Scoring Dashboard.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="animate-fade-in">
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-brain"></i> NeuroAdapt<span>AI</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="profile.html">Profiling</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="interview.html">Interviews</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content container">
+        <div class="dashboard-header">
+            <div>
+                <h1>Your Progress Dashboard</h1>
+                <p>Welcome back! Here's a clear view of your learning journey and job readiness.</p>
+            </div>
+            <a href="learning.html" class="btn btn-primary">Continue Learning</a>
+        </div>
+
+        <div class="grid-4" style="margin-bottom: 30px;">
+            <div class="card stat-card" style="border-left: 5px solid var(--primary-color);">
+                <i class="fas fa-star icon"></i>
+                <h3>Overall Employability</h3>
+                <div class="value" style="color: var(--primary-color);">78%</div>
+            </div>
+            <div class="card stat-card" style="border-left: 5px solid var(--secondary-color);">
+                <i class="fas fa-check-circle icon" style="color: var(--secondary-color);"></i>
+                <h3>Modules Completed</h3>
+                <div class="value">12 / 20</div>
+            </div>
+            <div class="card stat-card" style="border-left: 5px solid var(--warning);">
+                <i class="fas fa-clock icon" style="color: var(--warning);"></i>
+                <h3>Learning Pace</h3>
+                <div class="value">Steady</div>
+            </div>
+            <div class="card stat-card" style="border-left: 5px solid var(--success);">
+                <i class="fas fa-arrow-up icon" style="color: var(--success);"></i>
+                <h3>Recent Growth</h3>
+                <div class="value">+5%</div>
+            </div>
+        </div>
+
+        <div class="grid-2">
+            <div class="card">
+                <h2>Skill Development Focus</h2>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">Visual breakdown of your current vocational skill levels.</p>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h2>Predictive Employability Trend</h2>
+                <p style="margin-bottom: 15px; color: var(--text-muted);">How your job readiness score has improved over time.</p>
+                <div style="position: relative; height: 300px;">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 30px;">
+            <h2>Personalized Recommendations</h2>
+            <ul style="list-style-type: none; padding: 0;">
+                <li style="padding: 15px 0; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-bullseye" style="color: var(--primary-color); font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>Focus Area:</strong> Workplace Communication
+                        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">Your mock interview showed slight hesitation. Try the "Clear Communication" module next.</p>
+                    </div>
+                </li>
+                <li style="padding: 15px 0; display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-thumbs-up" style="color: var(--success); font-size: 1.5rem;"></i>
+                    <div>
+                        <strong>Strength Highlight:</strong> Task Execution
+                        <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem;">You have a high accuracy rate in task-based modules. Great job staying focused!</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Chart global styling for neurodiversity (calm colors, clear fonts)
+            Chart.defaults.font.family = "'Inter', 'OpenDyslexic', sans-serif";
+            Chart.defaults.color = '#666';
+            
+            // Radar Chart for Skills
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctxSkills, {
+                type: 'radar',
+                data: {
+                    labels: ['Communication', 'Task Execution', 'Time Management', 'Problem Solving', 'Adaptability'],
+                    datasets: [{
+                        label: 'Your Current Level',
+                        data: [65, 90, 70, 80, 75],
+                        backgroundColor: 'rgba(74, 144, 226, 0.2)',
+                        borderColor: '#4A90E2',
+                        pointBackgroundColor: '#4A90E2',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#4A90E2'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: 'rgba(0,0,0,0.1)' },
+                            grid: { color: 'rgba(0,0,0,0.1)' },
+                            pointLabels: { font: { size: 14, weight: '600' } },
+                            ticks: { display: false }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Line Chart for Employability Trend
+            const ctxTrend = document.getElementById('trendChart').getContext('2d');
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5'],
+                    datasets: [{
+                        label: 'Employability Score (%)',
+                        data: [45, 55, 62, 70, 78],
+                        fill: true,
+                        backgroundColor: 'rgba(80, 227, 194, 0.2)',
+                        borderColor: '#50E3C2',
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointBackgroundColor: '#50E3C2',
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(0,0,0,0.05)' }
+                        },
+                        x: { grid: { display: false } }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
